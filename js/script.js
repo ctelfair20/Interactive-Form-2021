@@ -43,22 +43,34 @@ const colorField = document.getElementById('color');
 if (designField.value === 'Select Theme') {
     // disable colorField
     colorField.disabled = true;
-// console.log(colorField.dataset.theme);
 }
 
-colorField.addEventListener('change', (e) => {
+designField.addEventListener('change', (e) => {
     // iterate over color's children
-    for (let i = 0; i < colorField.children.length; i++) {
-        colorField.disabled = false;
-        console.log(colorField.children[i]);
-        // // if design's value equals theme js puns && if child has a class name of heart js
-        // if () {
-        //     // set display to none
-        
-        // // else if design's value equals theme heart js && if child has a class name of js puns
-        // } else if () {
-        //     // set display to none
-        // }   
+    for (let i = 1; i < colorField.children.length; i++) {
+        let colorOption = colorField.children[i];
+        // if design's value equals theme js puns && if child has a class name of heart js
+        if (designField.value === 'js puns') {
+            // enable colorField
+            colorField.disabled = false;
+            // set display to inherit
+            colorOption.style.display = "inherit";
+            if (colorOption.dataset.theme === 'heart js') {
+                 // set display to none
+                colorOption.style.display = "none";
+            }
+        // else if design's value equals theme heart js && if child has a class name of js puns
+        } else if (designField.value === 'heart js') {
+            // enable colorField
+            colorField.disabled = false;
+            // set display to inherit
+            colorOption.style.display = "inherit";
+
+            if (colorOption.dataset.theme === 'js puns') {
+                // set display to none
+                colorOption.style.display = "none";
+            }
+        }
     }
 });
 
