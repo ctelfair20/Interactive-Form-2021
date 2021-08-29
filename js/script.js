@@ -27,6 +27,8 @@ jobRoles.addEventListener('change', (e) => {
     // check if the target has the tagname select
     if (e.target.tagName === "SELECT" && e.target.value === "other") {
         otherJobField.style.display = 'inherit';
+    } else {
+        otherJobField.style.display = 'none';
     }
 });
 
