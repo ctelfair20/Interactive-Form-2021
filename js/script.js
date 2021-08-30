@@ -132,3 +132,39 @@ activitiesFieldset.addEventListener("change", (e) => {
     }
 });
 
+/* Goal: Program the "I'm going to pay with" <select> element 
+to listen for user changes. When a change is detected, 
+hide all payment sections in the form’s UI except the selected one. */
+
+paymentMethodsConstants = {
+    paymentElement: document.getElementById('payment'),
+    creditCardDiv: document.getElementById('credit-card'), 
+    paypalDiv: document.getElementById('paypal'),
+    bitcoinDiv: document.getElementById('bitcoin')
+}
+
+paymentMethodsConstants.paymentElement.value = "credit-card";
+paymentMethodsConstants.paypalDiv.style.display = "none";
+paymentMethodsConstants.bitcoinDiv.style.display = "none";
+
+
+// create an event listener for the "I'm going to pay with" <select> element
+paymentMethodsConstants.paymentElement.addEventListener("change", (e) => {
+    // iterate over paymentMethodsConstants
+    for (let prop in paymentMethodsConstants) {
+        paymentMethodsConstants[prop].style.display = "inherit"
+        if (paymentMethodsConstants.paymentElement.value === "paypal") {
+            if (prop !== "paypalDiv" && prop !== "paymentElement") {
+                paymentMethodsConstants[prop].style.display = "none";
+            }
+        } else if (paymentMethodsConstants.paymentElement.value === "bitcoin") {
+            if (prop !== "bitcoinDiv" && prop !== "paymentElement") {
+                paymentMethodsConstants[prop].style.display = "none";
+            }
+        } else if (paymentMethodsConstants.paymentElement.value === "credit-card") {
+            if (prop !== "creditCardDiv" && prop !== "paymentElement") {
+                paymentMethodsConstants[prop].style.display = "none";
+            }
+        }
+    }
+});
