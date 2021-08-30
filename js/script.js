@@ -76,3 +76,59 @@ designField.addEventListener('change', (e) => {
     }
 });
 
+/* Goal: The "Total: $" element below the "Register for Activities" 
+section should update to reflect the sum 
+of the cost of the user’s selected activities.*/
+
+// HELPER FUNCTIONS
+
+// get price of activity
+
+function getPrice(input) {
+    const price = input.dataset.cost;
+    return price;
+}
+
+// get time of activity
+
+function getTime(input) {
+    const time = input.dataset.dayAndTime;
+    return time;
+}
+
+// access the fieldset element with the id of activities
+const activitiesFieldset = document.getElementById("activities");
+// access the activities box within the fieldset
+const activitiesBox = document.getElementById("activities-box");
+// access the p element for the price total of the activities
+const totalElement = document.getElementById('activities-cost');
+// set price to 0;
+let price = 0;
+
+// create event listener on the activities ele to listener for changes in the checkbox
+activitiesFieldset.addEventListener("change", (e) => {
+    // save target as target input
+    const targetInput = e.target;
+    // iterate over activitesBox children -- all labels
+    for (let i = 0; i < activitiesBox.children.length; i++) {
+        // save as currentFirstChild; access each label's first child
+        const currentInput = activitiesBox.children[i].firstElementChild;
+        if (targetInput !== currentInput) {
+            // check if current and target have the same time
+            if (getTime(targetInput) === getTime(currentInput)) {
+                // true? disable current
+                currentInput.disabled = true;
+            }
+        }
+    }
+    // check if the checkbox is checked
+    if (targetInput.checked) {
+        price += +getPrice(targetInput);
+        totalElement.textContent = `Total: $${price}`;
+        // getTime(targetInput);
+    } else if (!targetInput.checked) {
+        price -= +getPrice(targetInput);
+        totalElement.textContent = `Total: $${price}`
+    }
+});
+
