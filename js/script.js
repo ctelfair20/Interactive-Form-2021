@@ -116,10 +116,13 @@ activitiesFieldset.addEventListener("change", (e) => {
         if (targetInput !== currentInput) {
             // check if current and target have the same time
             if (getTime(targetInput) === getTime(currentInput)) {
-                // true? disable current
-                currentInput.disabled = true;
+                if (targetInput.checked === false) {
+                    currentInput.disabled = false;
+                } else {
+                    currentInput.disabled = true;
+                }
             }
-        }
+        } 
     }
     // check if the checkbox is checked
     if (targetInput.checked) {
