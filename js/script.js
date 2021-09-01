@@ -171,3 +171,81 @@ paymentMethodsConstants.paymentElement.addEventListener("change", (e) => {
         }
     }
 });
+
+/* Goal: Program the form element to listen for the submit event.
+the "Name" field cannot be blank or empty.
+
+The "Email Address" field must contain a validly formatted email address. 
+The email address does not need to be a real email address, just formatted like one. 
+For example: 
+dave@teamtreehouse.com. A few characters for the username, 
+followed by "@", followed by a few more characters and a ".com" for the domain name.
+You don’t have to account for other top-level domains, like .org, .net, etc.
+
+The "Register for Activities" section must have at least one activity selected.
+If and only if credit card is the selected payment method:
+The "Card number" field must contain a 13 - 16 digit credit card number 
+with no dashes or spaces.The value does not need to be a real credit card number.
+The "Zip code" field must contain a 5 digit number.
+The "CVV" field must contain a 3 digit number.*/
+
+
+// access the form element
+const form = document.querySelector("form");
+// access the name element
+const nameElement = document.getElementById("name");
+// access email element 
+const email = document.getElementById("email");
+
+// helper functions in validation
+function nameValidator() {
+    const nameValue = nameElement.value;
+    const isNameValid = /^[a-zA-Z]+\s?[a-zA-Z]+?\s?[a-zA-Z]+?$/.test(nameValue);
+    console.log(`Name validation test on "${nameValue}" evaluates to ${isNameValid}`);
+    return isNameValid;
+}
+
+function emailValidator() {
+    const emailValue = email.value;
+    const isEmailValid = /^[^@]+@[^@.]*.com/.test(emailValue);
+    console.log(`Email validation test on "${emailValue}" evaluates to ${isEmailValid}`); 
+    return isEmailValid;
+}
+// add eventListener for form element
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // check if validator function is retruing false
+    if (!nameValidator()) {
+        // if true, stop submission
+        e.preventDefault();
+        // log what is preventing submission
+        console.log("name is preventing submission");
+    }
+    // check if validator function is retruing false
+    if (!emailValidator()) {
+        // if true, stop submission
+        e.preventDefault();
+        // log what is preventing submission
+        console.log("email is preventing submission");
+    }
+
+    if (false/* insert bang + validation function call */) {
+        // if true, stop submission
+        e.preventDefault();
+        // log what is preventing submission
+        console.log("Card number is preventing submission");
+    }
+    if (false/* insert bang + validation function call */) {
+        // if true, stop submission
+        e.preventDefault();
+        // log what is preventing submission
+        console.log("CVV number is preventing submission");
+    }
+    if (false/* insert bang + validation function call */) {
+        // if true, stop submission
+        e.preventDefault();
+        // log what is preventing submission
+        console.log("Zip code is preventing submission");
+    }
+    console.log('Submit handler is functional!');
+});
