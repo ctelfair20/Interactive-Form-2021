@@ -193,10 +193,10 @@ The "CVV" field must contain a 3 digit number.*/
 // access the form element
 const form = document.querySelector("form");
 // access the name element
-const nameElement = document.getElementById("name");
+const name = document.getElementById("name");
 // access email element 
 const email = document.getElementById("email");
-// access card input
+// access card inputs
 const ccNum = document.getElementById("cc-num");
 const zip = document.getElementById("zip");
 const CvvNum = document.getElementById("cvv");
@@ -205,38 +205,68 @@ const CvvNum = document.getElementById("cvv");
 
 // HELPER VALIDATION FUNCTIONS:
 function nameValidator() {
-    const nameValue = nameElement.value;
+    const nameLabel = name.parentElement;
+    const nameValue = name.value;
     const isNameValid = /^[a-zA-Z]+\s?[a-zA-Z]+?\s?[a-zA-Z]+?$/.test(nameValue);
     console.log(`Name validation test on "${nameValue}" evaluates to ${isNameValid}`);
-    return isNameValid;
+    if (isNameValid) {
+        nameLabel.className = "valid";
+        return isNameValid;
+    } else {
+        nameLabel.className = "not-valid";
+    }
 }
 
 function emailValidator() {
+    const emailLabel = email.parentElement;
     const emailValue = email.value;
     const isEmailValid = /^[^@]+@[^@.]*.com/.test(emailValue);
     console.log(`Email validation test on "${emailValue}" evaluates to ${isEmailValid}`); 
-    return isEmailValid;
+    if (isEmailValid) {
+        emailLabel.className = "valid";
+        return isEmailValid;
+    } else {
+        emailLabel.className = "not-valid";
+    }
 }
 
 function cardNumValidator() {
+    const ccNumLabel = ccNum.parentElement;
     const ccNumValue = ccNum.value;
     const isCcNumValid = /^(\d{13}|\d{14}|\d{15}|\d{16})$/.test(ccNumValue);
     console.log(`CC validation test on "${ccNumValue}" evaluates to ${isCcNumValid}`);
-    return isCcNumValid;
+    if (isCcNumValid) {
+        ccNumLabel.className = "valid";
+        return isCcNumValid;
+    } else {
+        ccNumLabel.className = "not-valid";
+    }
 }
 
 function zipValidator() {
+    const zipLabel = zip.parentElement;
     const zipValue = zip.value;
     const isZipValid = /^\d{5}$/.test(zipValue);
     console.log(`Zipcode validation test on "${zipValue}" evaluates to ${isZipValid}`); 
-    return isZipValid;
+    if (isZipValid) {
+        zipLabel.className = "valid";
+        return isZipValid;
+    } else {
+        zipLabel.className = "not-valid";
+    }
 }
 
 function CvvNumValidator() {
+    const cvvNumLabel = CvvNum.parentElement;
     const CvvNumValue = CvvNum.value;
     const isCvvNumValid = /^\d{3}$/.test(CvvNumValue);
     console.log(`CVV Number validation test on "${CvvNumValue}" evaluates to ${isCvvNumValid}`); 
-    return isCvvNumValid;
+    if (isCvvNumValid) {
+        cvvNumLabel.className = "valid";
+        return isCvvNumValid;
+    } else {
+        cvvNumLabel.className = "not-valid";
+    }
 }
 
 function isOneActivitySelected() {
@@ -248,9 +278,11 @@ function isOneActivitySelected() {
         }
     }
     if (activityCount < 0) {
+        activitiesFieldset.className = "activities not-valid";
         return false; 
     }
     console.log(`Activity validation test evaluates to ${true}`);
+    activitiesFieldset.className = "activities valid";
     return true; 
 }
 
@@ -262,10 +294,6 @@ form.addEventListener("submit", (e) => {
         e.preventDefault();
         // log what is preventing submission
         console.log("No Activities are selected");
-        // add the class .not-valid
-        // activitiesFieldset.className += " not-valid";
-        // remove the class .valid
-        // activitiesFieldset.className = "";
     } 
     // check if validator function is retruing false
     if (!nameValidator()) {
@@ -273,6 +301,7 @@ form.addEventListener("submit", (e) => {
         e.preventDefault();
         // log what is preventing submission
         console.log("name is preventing submission");
+        
     }
     // check if validator function is retruing false
     if (!emailValidator()) {
@@ -303,14 +332,9 @@ form.addEventListener("submit", (e) => {
     } 
     console.log('Submit handler is functional!');
 });
-/* Goal:
-Program all of the activity checkbox input elements to listen for the focus and blur events.
-When the focus event is detected, add the ".focus" className to the checkbox input’s parent label element.
-When the blur event is detected, remove the .focus className from the label element that possesses it. 
-It can be helpful here to directly target the element with the className of .focus in order to remove it.*/
+// Goal: Make the focus states of the activities more obvious to all users.
 
 // access all activities inputs
-
 const activitiesInputs = document.querySelectorAll('input[type="checkbox"]');
 
 activitiesFieldset.addEventListener("focus", (e) => {
