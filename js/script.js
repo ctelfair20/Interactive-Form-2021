@@ -262,7 +262,11 @@ form.addEventListener("submit", (e) => {
         e.preventDefault();
         // log what is preventing submission
         console.log("No Activities are selected");
-    }
+        // add the class .not-valid
+        // activitiesFieldset.className += " not-valid";
+        // remove the class .valid
+        // activitiesFieldset.className = "";
+    } 
     // check if validator function is retruing false
     if (!nameValidator()) {
         // if true, stop submission
@@ -299,3 +303,46 @@ form.addEventListener("submit", (e) => {
     } 
     console.log('Submit handler is functional!');
 });
+/* Goal:
+Program all of the activity checkbox input elements to listen for the focus and blur events.
+When the focus event is detected, add the ".focus" className to the checkbox input’s parent label element.
+When the blur event is detected, remove the .focus className from the label element that possesses it. 
+It can be helpful here to directly target the element with the className of .focus in order to remove it.*/
+
+// access all activities inputs
+
+const activitiesInputs = document.querySelectorAll('input[type="checkbox"]');
+
+activitiesFieldset.addEventListener("focus", (e) => {
+    const currentCheckbox = e.target;
+    const currentLabel = currentCheckbox.parentElement;
+    currentLabel.className = "focus";
+    console.log(currentLabel);
+}, true);
+
+activitiesFieldset.addEventListener("blur", (e) => {
+    const currentCheckbox = e.target;
+    const currentLabel = currentCheckbox.parentElement;
+    currentLabel.className = "";
+    console.log(currentLabel);
+}, true);
+
+/* Goal: 
+When the user tries to submit the form, if a required form field or section is invalid:
+
+1. Add the ‘.not-valid’ className to the parent element of the form field or section.
+
+For the activity section, the parent element would be the fieldset element for the activity section. 
+For the other required inputs, the parent element would be a label element for the input.
+
+2. Remove the ‘.valid’ className from the parent element of the form field or section.
+
+Display the .hint element associated with the form field or section, 
+which will be the last child of the parent element of the form field or section. 
+The parentElement and lastElementChild properties will be helpful here.
+
+If a required form field or section is valid:
+Add the ‘.valid’ className to the parent element of the form field or section.
+Remove the ‘.not-valid’ className from the parent element of the form field or section.
+Hide the .hint element associated with that element.
+*/
