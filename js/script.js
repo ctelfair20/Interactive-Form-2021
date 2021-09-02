@@ -196,8 +196,14 @@ const form = document.querySelector("form");
 const nameElement = document.getElementById("name");
 // access email element 
 const email = document.getElementById("email");
+// access card input
+const ccNum = document.getElementById("cc-num");
+const zip = document.getElementById("zip");
+const CvvNum = document.getElementById("cvv");
 
-// helper functions in validation
+
+
+// HELPER VALIDATION FUNCTIONS:
 function nameValidator() {
     const nameValue = nameElement.value;
     const isNameValid = /^[a-zA-Z]+\s?[a-zA-Z]+?\s?[a-zA-Z]+?$/.test(nameValue);
@@ -211,9 +217,52 @@ function emailValidator() {
     console.log(`Email validation test on "${emailValue}" evaluates to ${isEmailValid}`); 
     return isEmailValid;
 }
+
+function cardNumValidator() {
+    const ccNumValue = ccNum.value;
+    const isCcNumValid = /^(\d{13}|\d{14}|\d{15}|\d{16})$/.test(ccNumValue);
+    console.log(`CC validation test on "${ccNumValue}" evaluates to ${isCcNumValid}`);
+    return isCcNumValid;
+}
+
+function zipValidator() {
+    const zipValue = zip.value;
+    const isZipValid = /^\d{5}$/.test(zipValue);
+    console.log(`Zipcode validation test on "${zipValue}" evaluates to ${isZipValid}`); 
+    return isZipValid;
+}
+
+function CvvNumValidator() {
+    const CvvNumValue = CvvNum.value;
+    const isCvvNumValid = /^\d{3}$/.test(CvvNumValue);
+    console.log(`CVV Number validation test on "${CvvNumValue}" evaluates to ${isCvvNumValid}`); 
+    return isCvvNumValid;
+}
+
+function isOneActivitySelected() {
+    let activityCount = 6;
+    for (let i = 0; i < activitiesBox.children.length; i++) {
+        const currentActivity = activitiesBox.children[i].firstElementChild;
+        if (!currentActivity.checked) {
+            activityCount --;
+        }
+    }
+    if (activityCount < 0) {
+        return false; 
+    }
+    console.log(`Activity validation test evaluates to ${true}`);
+    return true; 
+}
+
 // add eventListener for form element
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    if (!isOneActivitySelected()) {
+        // if true, stop submission
+        e.preventDefault();
+        // log what is preventing submission
+        console.log("No Activities are selected");
+    }
     // check if validator function is retruing false
     if (!nameValidator()) {
         // if true, stop submission
@@ -228,24 +277,25 @@ form.addEventListener("submit", (e) => {
         // log what is preventing submission
         console.log("email is preventing submission");
     }
-
-    if (false/* insert bang + validation function call */) {
-        // if true, stop submission
-        e.preventDefault();
-        // log what is preventing submission
-        console.log("Card number is preventing submission");
-    }
-    if (false/* insert bang + validation function call */) {
-        // if true, stop submission
-        e.preventDefault();
-        // log what is preventing submission
-        console.log("CVV number is preventing submission");
-    }
-    if (false/* insert bang + validation function call */) {
-        // if true, stop submission
-        e.preventDefault();
-        // log what is preventing submission
-        console.log("Zip code is preventing submission");
-    }
+    if (paymentMethodsConstants.paymentElement.value === "credit-card") {
+        if (!cardNumValidator()) {
+            // if true, stop submission
+            e.preventDefault();
+            // log what is preventing submission
+            console.log("Card number is preventing submission");
+        }
+        if (!zipValidator()) {
+            // if true, stop submission
+            e.preventDefault();
+            // log what is preventing submission
+            console.log("Zip number is preventing submission");
+        }
+        if (!CvvNumValidator()) {
+            // if true, stop submission
+            e.preventDefault();
+            // log what is preventing submission
+            console.log("CVV code is preventing submission");
+        }
+    } 
     console.log('Submit handler is functional!');
 });
