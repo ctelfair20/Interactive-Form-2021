@@ -211,9 +211,11 @@ function nameValidator() {
     console.log(`Name validation test on "${nameValue}" evaluates to ${isNameValid}`);
     if (isNameValid) {
         nameLabel.className = "valid";
+        nameLabel.lastElementChild.style.display = "none";
         return isNameValid;
     } else {
         nameLabel.className = "not-valid";
+        nameLabel.lastElementChild.style.display = "inherit";
     }
 }
 
@@ -224,9 +226,11 @@ function emailValidator() {
     console.log(`Email validation test on "${emailValue}" evaluates to ${isEmailValid}`); 
     if (isEmailValid) {
         emailLabel.className = "valid";
+        emailLabel.lastElementChild.style.display = "none";
         return isEmailValid;
     } else {
         emailLabel.className = "not-valid";
+        emailLabel.lastElementChild.style.display = "inherit";
     }
 }
 
@@ -237,9 +241,11 @@ function cardNumValidator() {
     console.log(`CC validation test on "${ccNumValue}" evaluates to ${isCcNumValid}`);
     if (isCcNumValid) {
         ccNumLabel.className = "valid";
+        ccNumLabel.lastElementChild.style.display = "none";
         return isCcNumValid;
     } else {
         ccNumLabel.className = "not-valid";
+        ccNumLabel.lastElementChild.style.display = "inherit";
     }
 }
 
@@ -250,9 +256,11 @@ function zipValidator() {
     console.log(`Zipcode validation test on "${zipValue}" evaluates to ${isZipValid}`); 
     if (isZipValid) {
         zipLabel.className = "valid";
+        zipLabel.lastElementChild.style.display = "none";
         return isZipValid;
     } else {
         zipLabel.className = "not-valid";
+        zipLabel.lastElementChild.style.display = "inherit";
     }
 }
 
@@ -263,9 +271,11 @@ function CvvNumValidator() {
     console.log(`CVV Number validation test on "${CvvNumValue}" evaluates to ${isCvvNumValid}`); 
     if (isCvvNumValid) {
         cvvNumLabel.className = "valid";
+        cvvNumLabel.lastElementChild.style.display = "none";
         return isCvvNumValid;
     } else {
         cvvNumLabel.className = "not-valid";
+        cvvNumLabel.lastElementChild.style.display = "inherit";
     }
 }
 
@@ -279,10 +289,12 @@ function isOneActivitySelected() {
     }
     if (activityCount < 0) {
         activitiesFieldset.className = "activities not-valid";
+        activitiesFieldset.lastElementChild.style.display = "inherit"
         return false; 
     }
     console.log(`Activity validation test evaluates to ${true}`);
     activitiesFieldset.className = "activities valid";
+    activitiesFieldset.lastElementChild.style.display = "none"
     return true; 
 }
 
@@ -350,23 +362,3 @@ activitiesFieldset.addEventListener("blur", (e) => {
     currentLabel.className = "";
     console.log(currentLabel);
 }, true);
-
-/* Goal: 
-When the user tries to submit the form, if a required form field or section is invalid:
-
-1. Add the ‘.not-valid’ className to the parent element of the form field or section.
-
-For the activity section, the parent element would be the fieldset element for the activity section. 
-For the other required inputs, the parent element would be a label element for the input.
-
-2. Remove the ‘.valid’ className from the parent element of the form field or section.
-
-Display the .hint element associated with the form field or section, 
-which will be the last child of the parent element of the form field or section. 
-The parentElement and lastElementChild properties will be helpful here.
-
-If a required form field or section is valid:
-Add the ‘.valid’ className to the parent element of the form field or section.
-Remove the ‘.not-valid’ className from the parent element of the form field or section.
-Hide the .hint element associated with that element.
-*/
