@@ -193,27 +193,35 @@ The "CVV" field must contain a 3 digit number.*/
 // access the form element
 const form = document.querySelector("form");
 // access the name element
-const name = document.getElementById("name");
+const nameElement = document.getElementById("name");
 // access email element 
 const email = document.getElementById("email");
 // access card inputs
 const ccNum = document.getElementById("cc-num");
 const zip = document.getElementById("zip");
-const CvvNum = document.getElementById("cvv");
+const cvvNum = document.getElementById("cvv");
+//access hint element
+const nameHint = document.getElementById("name-hint");
 
 
 
 // HELPER VALIDATION FUNCTIONS:
 function nameValidator() {
-    const nameLabel = name.parentElement;
-    const nameValue = name.value;
-    const isNameValid = /^[a-zA-Z]+\s?[a-zA-Z]+?\s?[a-zA-Z]+?$/.test(nameValue);
+    const nameLabel = nameElement.parentElement;
+    const nameValue = nameElement.value;
+    const isNameValid2 = /^[a-z]+\s?[A-Za-z]*?\s?[a-zA-Z]*?\s?/.test(nameValue);
+    const isNameValid = /^[A-Z][a-z]+\s?[A-Za-z]*?\s?[a-zA-Z]*?\s?$/.test(nameValue);
     console.log(`Name validation test on "${nameValue}" evaluates to ${isNameValid}`);
     if (isNameValid) {
         nameLabel.className = "valid";
         nameLabel.lastElementChild.style.display = "none";
         return isNameValid;
-    } else {
+    } else if (isNameValid2) {
+        nameHint.textContent = "Must capitalize first name"
+        nameLabel.className = "not-valid";
+        nameLabel.lastElementChild.style.display = "inherit";
+    }else {
+        nameHint.textContent = "Name field cannot be blank"
         nameLabel.className = "not-valid";
         nameLabel.lastElementChild.style.display = "inherit";
     }
@@ -264,11 +272,11 @@ function zipValidator() {
     }
 }
 
-function CvvNumValidator() {
-    const cvvNumLabel = CvvNum.parentElement;
-    const CvvNumValue = CvvNum.value;
-    const isCvvNumValid = /^\d{3}$/.test(CvvNumValue);
-    console.log(`CVV Number validation test on "${CvvNumValue}" evaluates to ${isCvvNumValid}`); 
+function cvvNumValidator() {
+    const cvvNumLabel = cvvNum.parentElement;
+    const cvvNumValue = cvvNum.value;
+    const isCvvNumValid = /^\d{3}$/.test(cvvNumValue);
+    console.log(`CVV Number validation test on "${cvvNumValue}" evaluates to ${isCvvNumValid}`); 
     if (isCvvNumValid) {
         cvvNumLabel.className = "valid";
         cvvNumLabel.lastElementChild.style.display = "none";
@@ -335,7 +343,7 @@ form.addEventListener("submit", (e) => {
             // log what is preventing submission
             console.log("Zip number is preventing submission");
         }
-        if (!CvvNumValidator()) {
+        if (!cvvNumValidator()) {
             // if true, stop submission
             e.preventDefault();
             // log what is preventing submission
@@ -362,3 +370,31 @@ activitiesFieldset.addEventListener("blur", (e) => {
     currentLabel.className = "";
     console.log(currentLabel);
 }, true);
+
+/* Program at least one of the required fields to listen for user interaction like a keyup.
+When then user interaction occurs, run the validation check for that input.
+If you created helper functions to validate the required form inputs and sections, 
+you can call those helper functions inside of a field’s event listener.
+Detail this specific feature in your README.md file.*/
+
+form.addEventListener('keyup', (e) => {
+    if (paymentMethodsConstants.paymentElement.value === "credit-card") {
+        if (e.target === nameElement){
+            nameValidator();
+        } else if (e.target === email) {
+            emailValidator();
+        } else if (e.target === ccNum) {
+            cardNumValidator();
+        } else if (e.target === zip) {
+            zipValidator();
+        } else if (e.target === cvvNum) {
+            cvvNumValidator();
+        } 
+    } else {
+        if (e.target === nameElement){
+            nameValidator();
+        } else if (e.target === email) {
+            emailValidator();
+        }
+    }
+});
