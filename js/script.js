@@ -308,7 +308,6 @@ function isOneActivitySelected() {
 
 // add eventListener for form element
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
     if (!isOneActivitySelected()) {
         // if true, stop submission
         e.preventDefault();
