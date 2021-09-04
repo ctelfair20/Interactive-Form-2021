@@ -8,6 +8,7 @@
   - the email section must be formatted correctly 
     - every server name is acceptable
     - the domain must be .com
+    - if the domain is missing, you will receive a error message
 
   - at least one activity must be selected 
     - you will not be allowed to select two classes that occur at the same time on the same day
