@@ -31,28 +31,74 @@ if (designField.value === 'Select Theme') {
 /* THE FOLLOWING EVENT LISTENER:
 - prevents users from selecting unavailable colors for their T-shirts */
 
-designField.addEventListener('change', (e) => {
-    for (let i = 1; i < colorField.children.length; i++) {
-        let colorOption = colorField.children[i];
+// designField.addEventListener('change', (e) => {
+//     for (let i = 1; i < colorField.children.length; i++) {
+//         let colorOption = colorField.children[i];
        
+//         if (designField.value === 'js puns') {
+//             colorField.disabled = false;
+//             colorOption.style.display = 'inherit';
+
+//             if (colorOption.dataset.theme === 'heart js') {
+//                 colorOption.style.display = 'none';
+//             }
+        
+//         } else if (designField.value === 'heart js') {
+//             colorField.disabled = false;
+//             colorOption.style.display = 'inherit';
+
+//             if (colorOption.dataset.theme === 'js puns') {
+//                 colorOption.style.display = 'none';
+//             }
+//         }
+//     }
+// });
+
+designField.addEventListener('change', () => {
+    for (let i = 0; i < colorField.children.length; i++) {
+        colorField.value = "Select a design theme above";
+        let colorOption = colorField.children[i];
+      
         if (designField.value === 'js puns') {
             colorField.disabled = false;
-            colorOption.style.display = 'inherit';
-
             if (colorOption.dataset.theme === 'heart js') {
                 colorOption.style.display = 'none';
+            } else if (colorOption.dataset.theme === 'js puns') {
+                colorOption.style.display = 'inherit';
             }
-        
         } else if (designField.value === 'heart js') {
             colorField.disabled = false;
-            colorOption.style.display = 'inherit';
-
             if (colorOption.dataset.theme === 'js puns') {
                 colorOption.style.display = 'none';
+            } else if (colorOption.dataset.theme === 'heart js') {
+                colorOption.style.display = 'inherit';
             }
         }
     }
+    console.log(colorField);
 });
+
+// colorField.addEventListener('change', () => {
+//     for (let i = 0; i < colorField.children.length; i++) {
+//         let colorOption = colorField.children[i];
+//         if (designField.value === 'js puns') {
+//             colorField.disabled = false;
+//             if (colorOption.dataset.theme === 'heart js') {
+//                 colorOption.style.display = 'none';
+//             } else if (colorOption.dataset.theme === 'js puns') {
+//                 colorOption.style.display = 'inherit';
+//             }
+//         } else if (designField.value === 'heart js') {
+//             colorField.disabled = false;
+//             if (colorOption.dataset.theme === 'js puns') {
+//                 colorOption.style.display = 'none';
+//             } else if (colorOption.dataset.theme === 'heart js') {
+//                 colorOption.style.display = 'inherit';
+//             }
+//         }
+//     }
+// });
+
 
 const activitiesFieldset = document.getElementById('activities');
 const activitiesBox = document.getElementById('activities-box');
